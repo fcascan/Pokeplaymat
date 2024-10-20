@@ -14,6 +14,9 @@ Made with love by fcascan to the Pokémon community.
 
 ### **ChangeLog** ###
 
+### ***v0.0.3*** ###
+- Navigation Compose added.
+
 ### ***v0.0.2*** ###
 - MainScreen template added.
 

@@ -1,3 +1,6 @@
+import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +25,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpSize
 import com.fcascan.pokeplaymat.presentation.common.components.InteractiveCard
@@ -31,10 +35,17 @@ import com.fcascan.pokeplaymat.presentation.common.components.SquareButton
 
 @Composable
 fun MainScreen(
-    artwork: Int,
-    numberOfBenchedCards: Int,
-    playerName: String,
+    navigateToSettings: () -> Unit = {},
+    navigateToGuide: () -> Unit = {},
 ) {
+    val TAG = MainScreen()::class.simpleName
+    val context = LocalContext.current
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+    val artwork = sharedPreferences.getInt("artwork", R.drawable.artwork_stadium)
+    val numberOfBenchedCards = sharedPreferences.getInt("numberOfBenchedCards", 5)
+    val playerName = sharedPreferences.getString("playerName", "Player") ?: "Player"
+    Log.d(TAG, "artwork: $artwork, numberOfBenchedCards: $numberOfBenchedCards, playerName: $playerName")
+
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         BackGround(
             artwork,
@@ -126,12 +137,12 @@ fun MainScreen(
                     Row {
                         SquareButton(
                             icon = painterResource(R.drawable.btn_book),
-                            onClick = { /* TODO: Add action */ }
+                            onClick = { navigateToGuide() }
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         SquareButton(
                             icon = Icons.Default.Settings,
-                            onClick = { /* TODO: Add action */ }
+                            onClick = { navigateToSettings() }
                         )
                     }
                 }
@@ -179,9 +190,8 @@ fun MainScreen(
 fun MainScreenPreview() {
     PokeplaymatTheme {
         MainScreen(
-            artwork = R.drawable.artwork_stadium,
-            numberOfBenchedCards= 5,
-            playerName = "Player name"
+            navigateToSettings = {},
+            navigateToGuide = {}
         )
     }
 }

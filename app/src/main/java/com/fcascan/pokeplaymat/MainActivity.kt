@@ -1,12 +1,10 @@
 package com.fcascan.pokeplaymat
 
-import MainScreen
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -14,8 +12,8 @@ import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.isSystemInDarkTheme
+import com.fcascan.pokeplaymat.presentation.navigation.NavigationWrapper
 import com.fcascan.pokeplaymat.presentation.ui.theme.PokeplaymatTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,25 +26,15 @@ class MainActivity : ComponentActivity() {
 
         //SharedPreferences:
         val sharedPreferences: SharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val isDarkTheme = sharedPreferences.getString("isDarkTheme", null)
         val isHorizontal = sharedPreferences.getBoolean("isHorizontal", true)
-        val backgroundResourceId = sharedPreferences.getInt("backgroundResourceId", R.drawable.artwork_stadium)
-        val numberOfBenchedCards = sharedPreferences.getInt("numberOfBenchedCards", 5)
-        val playerName = sharedPreferences.getString("playerName", "Player")
-
-        //Log of the values of the SharedPreferences to ensure they are correct:
-        Log.d(TAG, "isHorizontal: $isHorizontal, " +
-                "backgroundResourceId: $backgroundResourceId, " +
-                "numberOfBenchedCards: $numberOfBenchedCards, " +
-                "playerName: $playerName"
-        )
+        Log.d(TAG, "isHorizontal: $isHorizontal, isDarkTheme: $isDarkTheme")
 
         setContent {
-            PokeplaymatTheme {
-                MainScreen(
-                    artwork = backgroundResourceId,
-                    numberOfBenchedCards = numberOfBenchedCards,
-                    playerName = playerName ?: "Player",
-                )
+            PokeplaymatTheme(
+                darkTheme = isDarkTheme?.toBoolean() ?: isSystemInDarkTheme(),
+            ) {
+                NavigationWrapper()
             }
         }
 
@@ -73,17 +61,5 @@ class MainActivity : ComponentActivity() {
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             )
         }
-    }
-}
-
-@Preview(showBackground = true, widthDp = 700, heightDp = 360)
-@Composable
-fun MainActivityPreview() {
-    PokeplaymatTheme {
-        MainScreen(
-            artwork = R.drawable.artwork_stadium,
-            numberOfBenchedCards = 5,
-            playerName = "Player"
-        )
     }
 }
