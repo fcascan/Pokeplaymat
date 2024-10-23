@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fcascan.pokeplaymat.presentation.ui.theme.PokeplaymatTheme
+import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -48,7 +48,7 @@ fun RectangularButton (
 @Preview(showBackground = true)
 @Composable
 fun RectangularButtonPreview() {
-    PokeplaymatTheme {
+    StadiumTheme {
         RectangularButton(
             text = "Player name",
             onClick = {}

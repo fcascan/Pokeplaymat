@@ -13,26 +13,44 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.fcascan.pokeplaymat.presentation.navigation.NavigationWrapper
-import com.fcascan.pokeplaymat.presentation.ui.theme.PokeplaymatTheme
+import com.fcascan.pokeplaymat.presentation.ui.theme.ThemeProvider
 
 class MainActivity : ComponentActivity() {
     companion object {
         val TAG = MainActivity::class.java.simpleName
     }
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //SharedPreferences:
-        val sharedPreferences: SharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val isDarkTheme = sharedPreferences.getString("isDarkTheme", null)
         val isHorizontal = sharedPreferences.getBoolean("isHorizontal", true)
+        val initialTheme = sharedPreferences.getString("selectedTheme", null)
         Log.d(TAG, "isHorizontal: $isHorizontal, isDarkTheme: $isDarkTheme")
 
+        var selectedTheme : String? by mutableStateOf(initialTheme)
+
+        //SharedPreferences listener for dynamic theme change:
+        preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == "selectedTheme") {
+                selectedTheme = sharedPreferences.getString("selectedTheme", null)
+            }
+        }
+        sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
+
         setContent {
-            PokeplaymatTheme(
+            ThemeProvider(
                 darkTheme = isDarkTheme?.toBoolean() ?: isSystemInDarkTheme(),
+                selectedTheme = selectedTheme,
             ) {
                 NavigationWrapper()
             }

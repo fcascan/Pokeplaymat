@@ -1,6 +1,7 @@
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fcascan.pokeplaymat.R
 import com.fcascan.pokeplaymat.presentation.common.components.BackGround
-import com.fcascan.pokeplaymat.presentation.ui.theme.PokeplaymatTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,16 +32,17 @@ import com.fcascan.pokeplaymat.presentation.common.components.InteractiveCard
 import com.fcascan.pokeplaymat.presentation.common.components.LogoButton
 import com.fcascan.pokeplaymat.presentation.common.components.RectangularButton
 import com.fcascan.pokeplaymat.presentation.common.components.SquareButton
+import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
 
 @Composable
 fun MainScreen(
     navigateToSettings: () -> Unit = {},
     navigateToGuide: () -> Unit = {},
 ) {
-    val TAG = MainScreen()::class.simpleName
+    val TAG = "MainScreen"
     val context = LocalContext.current
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-    val artwork = sharedPreferences.getInt("artwork", R.drawable.artwork_stadium)
+    @DrawableRes val artwork = sharedPreferences.getInt("artwork", R.drawable.artwork_stadium)
     val numberOfBenchedCards = sharedPreferences.getInt("numberOfBenchedCards", 5)
     val playerName = sharedPreferences.getString("playerName", "Player") ?: "Player"
     Log.d(TAG, "artwork: $artwork, numberOfBenchedCards: $numberOfBenchedCards, playerName: $playerName")
@@ -185,10 +186,30 @@ fun MainScreen(
     }
 }
 
-@Preview(showBackground = true, widthDp = 700, heightDp = 360)
+@Preview(
+    showBackground = true,
+    widthDp = 700,
+    heightDp = 360,
+)
 @Composable
-fun MainScreenPreview() {
-    PokeplaymatTheme {
+fun MainScreenLandscapePreview() {
+    StadiumTheme {
+        MainScreen(
+            navigateToSettings = {},
+            navigateToGuide = {}
+        )
+    }
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    widthDp = 360,
+    heightDp = 700,
+)
+@Composable
+fun MainScreenNormalPreview() {
+    StadiumTheme {
         MainScreen(
             navigateToSettings = {},
             navigateToGuide = {}
