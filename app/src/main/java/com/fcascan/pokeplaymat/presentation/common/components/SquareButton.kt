@@ -14,9 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fcascan.pokeplaymat.presentation.ui.theme.PokeplaymatTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.fcascan.pokeplaymat.R
+import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
 import com.fcascan.pokeplaymat.utils.VibrationHelper
 
 @Composable
@@ -91,17 +92,18 @@ fun SquareButton(
     ) {
         Image(
             painter = icon,
-            contentDescription = null,
+            contentDescription = icon.toString(),
             modifier = Modifier.size(iconSize.dp),
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
         )
     }
 }
 
-@Preview(backgroundColor = 0xFF00FF, showBackground = true)
+@PreviewLightDark
+@PreviewDynamicColors
 @Composable
 fun SquareButtonPreview() {
-    PokeplaymatTheme {
+    StadiumTheme {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,

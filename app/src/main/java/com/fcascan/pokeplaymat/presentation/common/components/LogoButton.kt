@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import com.fcascan.pokeplaymat.R
-import com.fcascan.pokeplaymat.presentation.ui.theme.PokeplaymatTheme
+import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
 import com.fcascan.pokeplaymat.utils.VibrationHelper
 
 @Composable
@@ -40,7 +40,7 @@ fun LogoButton(
     ) {
         Image(
             painter = painter,
-            contentDescription = null,
+            contentDescription = painter.toString(),
             modifier = Modifier
 //                .fillMaxSize()
                 .align(Alignment.Center)
@@ -54,7 +54,7 @@ fun LogoButton(
 @Preview(showBackground = true)
 @Composable
 fun LogoButtonPreview() {
-    PokeplaymatTheme {
+    StadiumTheme {
         LogoButton(
             painter = painterResource(id = R.drawable.btn_coin),
             onClick = {}

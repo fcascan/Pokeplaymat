@@ -10,7 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fcascan.pokeplaymat.R
-import com.fcascan.pokeplaymat.presentation.ui.theme.PokeplaymatTheme
+import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
 
 @Composable
 fun BackGround(
@@ -29,7 +29,7 @@ fun BackGround(
 @Preview(showBackground = true, widthDp = 700, heightDp = 360)
 @Composable
 fun BackGroundPreview() {
-    PokeplaymatTheme {
+    StadiumTheme {
         BackGround(R.drawable.artwork_stadium)
     }
 }
