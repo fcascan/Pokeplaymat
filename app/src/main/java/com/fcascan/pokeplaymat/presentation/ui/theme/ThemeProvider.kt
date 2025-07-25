@@ -64,7 +64,7 @@ enum class CustomTheme {
                 "Sea" -> Sea
                 "Stadium" -> Stadium
                 "Town" -> Town
-                else -> Stadium
+                else -> River
             }
         }
     }

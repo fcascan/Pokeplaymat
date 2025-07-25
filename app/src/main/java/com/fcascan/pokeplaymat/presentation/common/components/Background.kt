@@ -8,8 +8,8 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.fcascan.pokeplaymat.R
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Blur
 import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
 
 @Composable
@@ -22,13 +22,13 @@ fun BackGround(
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxSize()
-            .blur(4.dp)
+            .blur(Blur.Small)
     )
 }
 
 @Preview(showBackground = true, widthDp = 700, heightDp = 360)
 @Composable
-fun BackGroundPreview() {
+private fun BackGroundPreview() {
     StadiumTheme {
         BackGround(R.drawable.artwork_stadium)
     }

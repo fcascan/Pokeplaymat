@@ -1,53 +1,82 @@
-import android.content.Context
-import android.content.SharedPreferences
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.fcascan.pokeplaymat.R
-import com.fcascan.pokeplaymat.presentation.common.components.BackGround
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fcascan.pokeplaymat.R
+import com.fcascan.pokeplaymat.presentation.common.components.BackGround
 import com.fcascan.pokeplaymat.presentation.common.components.InteractiveCard
 import com.fcascan.pokeplaymat.presentation.common.components.LogoButton
 import com.fcascan.pokeplaymat.presentation.common.components.RectangularButton
 import com.fcascan.pokeplaymat.presentation.common.components.SquareButton
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Padding
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Size
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Spacing
 import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
+import com.fcascan.pokeplaymat.presentation.viewmodel.MainScreenState
+import com.fcascan.pokeplaymat.presentation.viewmodel.MainScreenViewModel
 
 @Composable
 fun MainScreen(
-    navigateToSettings: () -> Unit = {},
-    navigateToGuide: () -> Unit = {},
+    navigateToSettings: () -> Unit,
+    navigateToGuide: () -> Unit,
 ) {
-    val TAG = "MainScreen"
-    val context = LocalContext.current
-    val sharedPreferences: SharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-    @DrawableRes val artwork = sharedPreferences.getInt("artwork", R.drawable.artwork_stadium)
-    val numberOfBenchedCards = sharedPreferences.getInt("numberOfBenchedCards", 5)
-    val playerName = sharedPreferences.getString("playerName", "Player") ?: "Player"
-    Log.d(TAG, "artwork: $artwork, numberOfBenchedCards: $numberOfBenchedCards, playerName: $playerName")
+    val viewModel : MainScreenViewModel = hiltViewModel()
+    val mainScreenState by viewModel.mainScreenState.collectAsStateWithLifecycle()
 
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+    when(mainScreenState) {
+        is MainScreenState.Loading -> {
+            //TODO
+            // Show loading state if needed
+        }
+        is MainScreenState.Error -> {
+            //TODO
+            // Handle error state if needed
+        }
+        is MainScreenState.Success -> {
+            MainScreenContent(
+                artwork = (mainScreenState as MainScreenState.Success).artwork,
+                playerName = (mainScreenState as MainScreenState.Success).playerName,
+                numberOfBenchedCards = (mainScreenState as MainScreenState.Success).numberOfBenchedCards,
+                navigateToSettings = navigateToSettings,
+                navigateToGuide = navigateToGuide
+            )
+        }
+    }
+}
+
+@Composable
+fun MainScreenContent(
+    @DrawableRes artwork: Int,
+    playerName: String?,
+    numberOfBenchedCards: Int,
+    navigateToSettings: () -> Unit,
+    navigateToGuide: () -> Unit
+) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
         BackGround(
             artwork,
         )
@@ -57,7 +86,7 @@ fun MainScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(Padding.Small),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top,
             ) {
@@ -69,13 +98,13 @@ fun MainScreen(
                         icon = Icons.Default.Refresh,
                         onClick = { /* TODO: Add action */ }
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(Spacing.ExtraSmall))
                     SquareButton(
                         icon = painterResource(id = R.drawable.btn_sp),
                         onClick = { /* TODO: Add action */ }
                     )
                 }
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.height(Spacing.ExtraSmall))
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
@@ -85,7 +114,7 @@ fun MainScreen(
                         verticalArrangement = Arrangement.SpaceEvenly,
                     ) {
                         LogoButton(
-                            size = DpSize(44.dp, 44.dp),
+                            size = DpSize(Size.MediumPlus, Size.MediumPlus),
                             painter = painterResource(id = R.drawable.btn_dice),
                             onClick = { /* TODO: Add action */ }
                         )
@@ -94,7 +123,7 @@ fun MainScreen(
                             onClick = { /* TODO: Add action */ }
                         )
                     }
-                    Spacer(modifier = Modifier.width(25.dp))
+                    Spacer(modifier = Modifier.width(Spacing.Large))
                     //Active Card:
                     val damage = remember { mutableIntStateOf(0) }
                     InteractiveCard(
@@ -119,28 +148,28 @@ fun MainScreen(
                             damage.intValue = maxOf(0, damage.intValue - 10)
                         }
                     )
-                    Spacer(modifier = Modifier.width(25.dp))
+                    Spacer(modifier = Modifier.width(Spacing.Large))
                     LogoButton(
                         painter = painterResource(id = R.drawable.btn_coin),
                         onClick = { /* TODO: Add action */ }
                     )
                 }
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.height(Spacing.ExtraSmall))
                 Column(
                     modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.End
                 ) {
                     RectangularButton(
-                        text = playerName,
+                        text = playerName ?: "Player",
                         onClick = { /* TODO: Add action */ }
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(Spacing.ExtraSmall))
                     Row {
                         SquareButton(
                             icon = painterResource(R.drawable.btn_book),
                             onClick = { navigateToGuide() }
                         )
-                        Spacer(modifier = Modifier.width(10.dp))
+                        Spacer(modifier = Modifier.width(Spacing.ExtraSmall))
                         SquareButton(
                             icon = Icons.Default.Settings,
                             onClick = { navigateToSettings() }
@@ -151,7 +180,7 @@ fun MainScreen(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(25.dp),
+                    .padding(Padding.ExtraLarge),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.Bottom
             ) {
@@ -161,7 +190,7 @@ fun MainScreen(
                     InteractiveCard(
                         damageText = damageArray[i].intValue,
                         onTap = {
-                          //add 10 damage:
+                            //add 10 damage:
                             damageArray[i].intValue += 10
                         },
                         onDoubleTap = {
@@ -169,7 +198,7 @@ fun MainScreen(
                             damageArray[i].intValue = maxOf(0, damageArray[i].intValue - 10)
                         },
                         onLongPress = {
-                          //TODO: Open card dialog
+                            //TODO: Open card dialog
                         },
                         onPositiveSwipe = {
                             //add 10 damage:
@@ -192,11 +221,14 @@ fun MainScreen(
     heightDp = 360,
 )
 @Composable
-fun MainScreenLandscapePreview() {
+private fun MainScreenLandscapePreview() {
     StadiumTheme {
-        MainScreen(
+        MainScreenContent(
+            artwork = R.drawable.artwork_river,
+            playerName = "Player",
+            numberOfBenchedCards = 5,
             navigateToSettings = {},
-            navigateToGuide = {}
+            navigateToGuide = {},
         )
     }
 }
@@ -208,11 +240,14 @@ fun MainScreenLandscapePreview() {
     heightDp = 700,
 )
 @Composable
-fun MainScreenNormalPreview() {
+private fun MainScreenNormalPreview() {
     StadiumTheme {
-        MainScreen(
+        MainScreenContent(
+            artwork = R.drawable.artwork_river,
+            playerName = "Player",
+            numberOfBenchedCards = 5,
             navigateToSettings = {},
-            navigateToGuide = {}
+            navigateToGuide = {},
         )
     }
 }

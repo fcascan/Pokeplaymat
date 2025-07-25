@@ -13,25 +13,27 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import com.fcascan.pokeplaymat.R
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Padding
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Shadow
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Size
 import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
 import com.fcascan.pokeplaymat.utils.VibrationHelper
 
 @Composable
 fun LogoButton(
-    size: DpSize = DpSize(64.dp, 64.dp),
-    padding: Dp = 0.dp,
+    size: DpSize = DpSize(Size.Huge, Size.Huge),
+    padding: Dp = Padding.None,
     painter: Painter,
     onClick: () -> Unit,
 ) {
     val context = LocalContext.current
     Box(
         modifier = Modifier
-            .size(64.dp, 64.dp)
+            .size(Size.Huge)
             .clickable(
                 onClick = {
                 VibrationHelper().triggerVibration(context)
@@ -46,14 +48,14 @@ fun LogoButton(
                 .align(Alignment.Center)
                 .size(size)
                 .padding(padding)
-                .shadow(18.dp, shape = MaterialTheme.shapes.medium)
+                .shadow(Shadow.Medium, shape = MaterialTheme.shapes.medium)
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LogoButtonPreview() {
+private fun LogoButtonPreview() {
     StadiumTheme {
         LogoButton(
             painter = painterResource(id = R.drawable.btn_coin),

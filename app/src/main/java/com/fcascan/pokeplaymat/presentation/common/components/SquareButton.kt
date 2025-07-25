@@ -28,6 +28,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.fcascan.pokeplaymat.R
+import com.fcascan.pokeplaymat.presentation.ui.dimen.BorderWidth
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Corner
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Elevation
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Padding
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Size
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Spacing
 import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
 import com.fcascan.pokeplaymat.utils.VibrationHelper
 
@@ -44,23 +50,23 @@ fun SquareButton(
             onClick()
         },
         modifier = Modifier
-            .size(64.dp)
+            .size(Size.Huge)
             .shadow(
-                elevation = 16.dp, // Adjust the elevation as needed
-                shape = RoundedCornerShape(18.dp),
+                elevation = Elevation.Small,
+                shape = RoundedCornerShape(Corner.LargePlus),
                 clip = false
             ),
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(Corner.LargePlus),
         elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 28.dp,
-            pressedElevation = 28.dp,
-            disabledElevation = 28.dp,
-            hoveredElevation = 28.dp,
-            focusedElevation = 28.dp
+            defaultElevation = Elevation.Large,
+            pressedElevation = Elevation.Large,
+            disabledElevation = Elevation.Large,
+            hoveredElevation = Elevation.Large,
+            focusedElevation = Elevation.Large,
         ),
-        border = BorderStroke(6.dp, MaterialTheme.colorScheme.primary),
+        border = BorderStroke(BorderWidth.Vignette, MaterialTheme.colorScheme.primary),
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimary),
-        contentPadding = PaddingValues(0.dp)
+        contentPadding = PaddingValues(Padding.None)
     ) {
         Icon(
             imageVector = icon,
@@ -83,12 +89,12 @@ fun SquareButton(
             VibrationHelper().triggerVibration(context)
             onClick()
         },
-        shape = RoundedCornerShape(18.dp),
-        border = BorderStroke(6.dp, MaterialTheme.colorScheme.primary),
+        shape = RoundedCornerShape(Corner.LargePlus),
+        border = BorderStroke(BorderWidth.Vignette, MaterialTheme.colorScheme.primary),
         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onPrimary),
         modifier = Modifier
-            .size(64.dp),
-        contentPadding = PaddingValues(0.dp)
+            .size(Size.Huge),
+        contentPadding = PaddingValues(Padding.None)
     ) {
         Image(
             painter = icon,
@@ -112,7 +118,7 @@ fun SquareButtonPreview() {
                 icon = Icons.Default.Refresh,
                 onClick = {}
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(Spacing.ExtraSmall))
             SquareButton(
                 icon = painterResource(id = R.drawable.btn_sp),
                 onClick = {}

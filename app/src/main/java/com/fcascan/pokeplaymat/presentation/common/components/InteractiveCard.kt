@@ -1,31 +1,33 @@
 package com.fcascan.pokeplaymat.presentation.common.components
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fcascan.pokeplaymat.utils.CustomViewConfiguration
+import com.fcascan.pokeplaymat.presentation.ui.dimen.BorderWidth
+import com.fcascan.pokeplaymat.presentation.ui.dimen.Corner
 import com.fcascan.pokeplaymat.utils.VibrationHelper
 import kotlinx.coroutines.launch
 
@@ -40,7 +42,7 @@ fun InteractiveCard(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val shape = RoundedCornerShape(22.dp)
+    val shape = RoundedCornerShape(Corner.Larger)
 //    val customViewConfiguration = CustomViewConfiguration(LocalDensity.current)
 
 //    CompositionLocalProvider(LocalViewConfiguration provides customViewConfiguration) {
@@ -54,8 +56,8 @@ fun InteractiveCard(
     //            )
                 .background(MaterialTheme.colorScheme.background, shape)
                 .border(
-                    border = BorderStroke(6.dp, MaterialTheme.colorScheme.primary),
-                    shape = RoundedCornerShape(16.dp)
+                    border = BorderStroke(BorderWidth.Vignette, MaterialTheme.colorScheme.primary),
+                    shape = RoundedCornerShape(Corner.Large)
                 )
                 .pointerInput(Unit) {
                     detectTapGestures(
@@ -151,7 +153,7 @@ fun InteractiveCard(
 
 @Preview(showBackground = true)
 @Composable
-fun InteractiveCardPreview() {
+private fun InteractiveCardPreview() {
     InteractiveCard(
         onTap = {},
         onDoubleTap = {},

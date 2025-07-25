@@ -1,6 +1,5 @@
 package com.fcascan.pokeplaymat
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Build
@@ -18,38 +17,48 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.fcascan.pokeplaymat.presentation.navigation.NavigationWrapper
 import com.fcascan.pokeplaymat.presentation.ui.theme.ThemeProvider
+import com.fcascan.pokeplaymat.utils.SharedPreferencesUtil
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     companion object {
-        val TAG = MainActivity::class.java.simpleName
+        private val TAG = MainActivity::class.java.simpleName
     }
 
-    private lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var sharedPreferences: SharedPreferencesUtil
+
     private lateinit var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //SharedPreferences:
-        sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val isDarkTheme = sharedPreferences.getString("isDarkTheme", null)
-        val isHorizontal = sharedPreferences.getBoolean("isHorizontal", true)
-        val initialTheme = sharedPreferences.getString("selectedTheme", null)
-        Log.d(TAG, "isHorizontal: $isHorizontal, isDarkTheme: $isDarkTheme")
+        var isDarkTheme = sharedPreferences.getIsDarkTheme()
+        val isHorizontal = sharedPreferences.getIsHorizontal()
+        val initialTheme = sharedPreferences.getSelectedTheme()
+        Log.d(TAG, "isHorizontal: $isHorizontal, isDarkTheme: $isDarkTheme, initialTheme: $initialTheme")
 
         var selectedTheme : String? by mutableStateOf(initialTheme)
 
         //SharedPreferences listener for dynamic theme change:
         preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             if (key == "selectedTheme") {
-                selectedTheme = sharedPreferences.getString("selectedTheme", null)
+                selectedTheme = sharedPreferences.getSelectedTheme()
             }
         }
         sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
 
         setContent {
+            if (isDarkTheme == null) {
+                sharedPreferences.setIsDarkTheme(isSystemInDarkTheme())
+                isDarkTheme = isSystemInDarkTheme()
+            }
+
             ThemeProvider(
-                darkTheme = isDarkTheme?.toBoolean() ?: isSystemInDarkTheme(),
+                darkTheme = isDarkTheme!!,
                 selectedTheme = selectedTheme,
             ) {
                 NavigationWrapper()
