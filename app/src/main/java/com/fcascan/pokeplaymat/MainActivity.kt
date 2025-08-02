@@ -1,6 +1,5 @@
 package com.fcascan.pokeplaymat
 
-import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
@@ -11,15 +10,13 @@ import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fcascan.pokeplaymat.presentation.navigation.NavigationWrapper
 import com.fcascan.pokeplaymat.presentation.ui.theme.ThemeProvider
-import com.fcascan.pokeplaymat.utils.SharedPreferencesUtil
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -27,53 +24,39 @@ class MainActivity : ComponentActivity() {
         private val TAG = MainActivity::class.java.simpleName
     }
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferencesUtil
-
-    private lateinit var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener
+    val mainActivityViewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //SharedPreferences:
-        var isDarkTheme = sharedPreferences.getIsDarkTheme()
-        val isHorizontal = sharedPreferences.getIsHorizontal()
-        val initialTheme = sharedPreferences.getSelectedTheme()
-        Log.d(TAG, "isHorizontal: $isHorizontal, isDarkTheme: $isDarkTheme, initialTheme: $initialTheme")
-
-        var selectedTheme : String? by mutableStateOf(initialTheme)
-
-        //SharedPreferences listener for dynamic theme change:
-        preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == "selectedTheme") {
-                selectedTheme = sharedPreferences.getSelectedTheme()
-            }
-        }
-        sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
-
         setContent {
+            val isDarkTheme by mainActivityViewModel.isDarkTheme.collectAsStateWithLifecycle()
+            val isHorizontal by mainActivityViewModel.isHorizontal.collectAsStateWithLifecycle()
+            val selectedTheme by mainActivityViewModel.selectedTheme.collectAsStateWithLifecycle()
+
+            Log.d(TAG, "onCreate: isDarkTheme=$isDarkTheme, isHorizontal=$isHorizontal, selectedTheme=$selectedTheme")
+
             if (isDarkTheme == null) {
-                sharedPreferences.setIsDarkTheme(isSystemInDarkTheme())
-                isDarkTheme = isSystemInDarkTheme()
+                mainActivityViewModel.setIsDarkTheme(isSystemInDarkTheme())
+            } else {
+                ThemeProvider(
+                    darkTheme = isDarkTheme?: isSystemInDarkTheme(),
+                    selectedTheme = selectedTheme,
+                ) {
+                    NavigationWrapper()
+                }
             }
 
-            ThemeProvider(
-                darkTheme = isDarkTheme!!,
-                selectedTheme = selectedTheme,
-            ) {
-                NavigationWrapper()
+            //Screen orientation:
+            requestedOrientation = if (isHorizontal) {
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            } else {
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             }
         }
 
         //Edge-to-edge
         enableEdgeToEdge()
-
-        //Screen orientation:
-        requestedOrientation = if (isHorizontal) {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
 
         //Fullscreen mode of app:
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

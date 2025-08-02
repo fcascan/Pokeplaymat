@@ -1,8 +1,8 @@
 package com.fcascan.pokeplaymat.presentation.viewmodel
 
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fcascan.pokeplaymat.model.CustomThemeSelection
 import com.fcascan.pokeplaymat.utils.SharedPreferencesUtil
 import com.fcascan.pokeplaymat.utils.restartableStateIn
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ class MainScreenViewModel @Inject constructor(
         emit(MainScreenState.Loading)
         runCatching {
             val successState = MainScreenState.Success(
-                artwork = sharedPreferences.getArtwork(),
+                customTheme = sharedPreferences.getCustomTheme(),
                 numberOfBenchedCards = sharedPreferences.getNumberOfBenchedCards(),
                 playerName = sharedPreferences.getPlayerName(),
             )
@@ -35,7 +35,7 @@ sealed class MainScreenState {
     data object Loading : MainScreenState()
     data class Error(val error: Throwable) : MainScreenState()
     data class Success(
-        @DrawableRes val artwork: Int,
+        val customTheme: CustomThemeSelection?,
         val numberOfBenchedCards: Int,
         val playerName: String?,
     ) : MainScreenState()

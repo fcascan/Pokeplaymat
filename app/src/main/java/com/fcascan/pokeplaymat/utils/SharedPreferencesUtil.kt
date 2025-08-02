@@ -2,8 +2,7 @@ package com.fcascan.pokeplaymat.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.annotation.DrawableRes
-import com.fcascan.pokeplaymat.R
+import com.fcascan.pokeplaymat.model.CustomThemeSelection
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -50,10 +49,17 @@ class SharedPreferencesUtil @Inject constructor(
         getSharedPreferences().edit().putString(PLAYER_NAME_KEY, name).apply()
     }
 
-    @DrawableRes fun getArtwork(): Int = getSharedPreferences().getInt(ARTWORK_KEY, R.drawable.artwork_river)
+    fun getCustomTheme(): CustomThemeSelection? {
+        val customThemeString = getSharedPreferences().getString(CUSTOM_THEME, CustomThemeSelection.RIVER.name)
+        return if (customThemeString != null) {
+            CustomThemeSelection.valueOf(customThemeString)
+        } else {
+            null
+        }
+    }
 
-    fun setArtwork(@DrawableRes artwork: Int) {
-        getSharedPreferences().edit().putInt(ARTWORK_KEY, artwork).apply()
+    fun setCustomTheme(customTheme: CustomThemeSelection?) {
+        getSharedPreferences().edit().putString(CUSTOM_THEME, customTheme?.name).apply()
     }
 
     fun getTwoPlayersMode(): Boolean = getSharedPreferences().getBoolean(TWO_PLAYERS_MODE_KEY, false)
@@ -116,7 +122,7 @@ class SharedPreferencesUtil @Inject constructor(
         const val IS_HORIZONTAL_KEY = "isHorizontal"
         const val NUMBER_OF_BENCHED_CARDS_KEY = "numberOfBenchedCards"
         const val PLAYER_NAME_KEY = "playerName"
-        const val ARTWORK_KEY = "artwork"
+        const val CUSTOM_THEME = "custom_theme"
         const val TWO_PLAYERS_MODE_KEY = "twoPlayersMode"
         const val ALWAYS_ON_SCREEN_KEY = "alwaysOnScreen"
         const val SOUND_FX_KEY = "soundFx"

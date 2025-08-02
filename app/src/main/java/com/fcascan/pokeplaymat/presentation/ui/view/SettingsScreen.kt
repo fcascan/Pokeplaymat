@@ -1,19 +1,13 @@
 package com.fcascan.pokeplaymat.presentation.ui.view
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,9 +17,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fcascan.pokeplaymat.R
+import com.fcascan.pokeplaymat.model.CustomThemeSelection
+import com.fcascan.pokeplaymat.model.ThemeSelection
 import com.fcascan.pokeplaymat.presentation.common.components.BackGround
+import com.fcascan.pokeplaymat.presentation.common.components.OptionRowChip
+import com.fcascan.pokeplaymat.presentation.common.components.OptionRowSwitch
 import com.fcascan.pokeplaymat.presentation.ui.dimen.Padding
 import com.fcascan.pokeplaymat.presentation.ui.dimen.Spacing
+import com.fcascan.pokeplaymat.presentation.util.CustomThemeSelectionMapper
 import com.fcascan.pokeplaymat.presentation.viewmodel.SettingsScreenState
 import com.fcascan.pokeplaymat.presentation.viewmodel.SettingsScreenViewModel
 
@@ -48,7 +47,7 @@ fun SettingsScreen(
         is SettingsScreenState.Success -> {
             SettingsScreenContent(
                 closeApp = closeApp,
-                artwork = (settingsScreenState as SettingsScreenState.Success).artwork,
+                customThemeSelected = (settingsScreenState as SettingsScreenState.Success).customTheme,
                 twoPlayersMode = (settingsScreenState as SettingsScreenState.Success).twoPlayersMode,
                 alwaysOnScreen = (settingsScreenState as SettingsScreenState.Success).alwaysOnScreen,
                 soundFx = (settingsScreenState as SettingsScreenState.Success).soundFx,
@@ -57,7 +56,7 @@ fun SettingsScreen(
                 selectedTheme = (settingsScreenState as SettingsScreenState.Success).selectedTheme,
                 customBackground = (settingsScreenState as SettingsScreenState.Success).customBackground,
                 themeColor = (settingsScreenState as SettingsScreenState.Success).themeColor,
-                onArtworkChange = { newValue -> viewModel.updateArtwork(newValue) },
+                onCustomThemeChange = { newValue -> viewModel.updateArtwork(newValue) },
                 onTwoPlayersModeChange = { newValue -> viewModel.updateTwoPlayersMode(newValue) },
                 onAlwaysOnScreenChange = { newValue -> viewModel.updateAlwaysOnScreen(newValue) },
                 onSoundFxChange = { newValue -> viewModel.updateSoundFx(newValue) },
@@ -65,7 +64,7 @@ fun SettingsScreen(
                 onDisplayNotificationBarChange = { newValue -> viewModel.updateDisplayNotificationBar(newValue) },
                 onSelectedThemeChange = { newValue -> viewModel.updateSelectedTheme(newValue) },
                 onCustomBackgroundChange = { newValue -> viewModel.updateCustomBackground(newValue) },
-                onThemeColorChange = { newValue -> viewModel.updateThemeColor(newValue) },
+                onColorVariantChange = { newValue -> viewModel.updateThemeColor(newValue) },
             )
         }
     }
@@ -74,7 +73,7 @@ fun SettingsScreen(
 @Composable
 fun SettingsScreenContent(
     closeApp: () -> Unit,
-    @DrawableRes artwork: Int,
+    customThemeSelected: CustomThemeSelection?,
     twoPlayersMode: Boolean,
     alwaysOnScreen: Boolean,
     soundFx: Boolean,
@@ -83,7 +82,7 @@ fun SettingsScreenContent(
     selectedTheme: String?,
     customBackground: Boolean,
     themeColor: String?,
-    onArtworkChange: (Int) -> Unit,
+    onCustomThemeChange: (CustomThemeSelection?) -> Unit,
     onTwoPlayersModeChange: (Boolean) -> Unit,
     onAlwaysOnScreenChange: (Boolean) -> Unit,
     onSoundFxChange: (Boolean) -> Unit,
@@ -91,12 +90,13 @@ fun SettingsScreenContent(
     onDisplayNotificationBarChange: (Boolean) -> Unit,
     onSelectedThemeChange: (String?) -> Unit,
     onCustomBackgroundChange: (Boolean) -> Unit,
-    onThemeColorChange: (String?)-> Unit,
+    onColorVariantChange: (String?) -> Unit,
 ) {
     val scrollState = rememberScrollState()
+    val customThemeSelectionMapper = CustomThemeSelectionMapper
 
     BackGround(
-        artwork,
+        customThemeSelectionMapper.mapToDrawableResId(customThemeSelected),
     )
 
     Column(
@@ -111,134 +111,65 @@ fun SettingsScreenContent(
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(Spacing.Small)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Two Players Mode")
-            Switch(
-                checked = twoPlayersMode,
-                onCheckedChange = {
-                    onTwoPlayersModeChange(it)
-                }
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Always On Screen")
-            Switch(
-                checked = alwaysOnScreen,
-                onCheckedChange = {
-                    onAlwaysOnScreenChange(it)
-                }
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Sound FX")
-            Switch(
-                checked = soundFx,
-                onCheckedChange = {
-                    onSoundFxChange(it)
-                }
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Vibration")
-            Switch(
-                checked = vibration,
-                onCheckedChange = {
-                    onVibrationChange(it)
-                }
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Display Notification Bar")
-            Switch(
-                checked = displayNotificationBar,
-                onCheckedChange = {
-                    onDisplayNotificationBarChange(it)
-                }
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Themes")
-            DropdownMenu(
-                expanded = false,
-                onDismissRequest = { }
-            ) {
-                DropdownMenuItem(
-                    text = { Text("Default") },
-                    onClick = { onSelectedThemeChange("Default") },
-                )
-                DropdownMenuItem(
-                    text = { Text("Custom") },
-                    onClick = { onSelectedThemeChange("Custom") },
-                )
+        OptionRowSwitch(
+            primaryLabel = "Two Players Mode",
+            secondaryLabel = "Enable or disable two players mode",
+            checked = twoPlayersMode,
+            onCheckedChange = {
+                onTwoPlayersModeChange(it)
             }
-        }
-
-        if (selectedTheme == "Custom") {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Upload Background")
-                Switch(
-                    checked = customBackground,
-                    onCheckedChange = { onCustomBackgroundChange(it) }
-                )
+        )
+        OptionRowSwitch(
+            primaryLabel = "Always On Screen",
+            secondaryLabel = "Keep the screen always on",
+            checked = alwaysOnScreen,
+            onCheckedChange = {
+                onAlwaysOnScreenChange(it)
             }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Theme Color")
-                DropdownMenu(
-                    expanded = true,
-                    onDismissRequest = { }
-                ) {
-                    DropdownMenuItem(
-                        text = { Text("Red") },
-                        onClick = { onThemeColorChange("Red") },
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Blue") },
-                        onClick = { onThemeColorChange("Blue") },
-                    )
-                }
+        )
+        OptionRowSwitch(
+            primaryLabel = "Sound FX",
+            secondaryLabel = "Enable or disable sound effects",
+            checked = soundFx,
+            onCheckedChange = {
+                onSoundFxChange(it)
+            },
+        )
+        OptionRowSwitch(
+            primaryLabel = "Vibration",
+            secondaryLabel = "Enable or disable vibration feedback",
+            checked = vibration,
+            onCheckedChange = {
+                onVibrationChange(it)
+            },
+        )
+        OptionRowSwitch(
+            primaryLabel = "Display Notification Bar",
+            secondaryLabel = "Enable or disable the notification bar",
+            checked = displayNotificationBar,
+            onCheckedChange = {
+                onDisplayNotificationBarChange(it)
+            },
+        )
+        OptionRowChip(
+            labelResId = R.string.select_custom_theme_primary_label,
+            secondaryLabelResId = R.string.select_custom_theme_secondary_label,
+            selectedOption = customThemeSelected?.name,
+            options = CustomThemeSelection.entries.map { it.name },
+            onOptionSelected = { newValue ->
+                onCustomThemeChange(customThemeSelectionMapper.mapToCustomThemeSelection(newValue))
             }
-        }
-
+        )
+        OptionRowChip(
+            labelResId = R.string.select_color_variant_primary_label,
+            secondaryLabelResId = R.string.select_color_variant_secondary_label,
+            selectedOption = "System Default",
+            options = ThemeSelection.entries.map { it.name },
+            onOptionSelected = { newValue ->
+                onColorVariantChange(newValue)
+            }
+        )
         Spacer(modifier = Modifier.weight(1f))
-
         Button(
             onClick = { closeApp() },
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -253,7 +184,7 @@ fun SettingsScreenContent(
 private fun SettingsScreenPreview() {
     SettingsScreenContent(
         closeApp = {},
-        artwork = R.drawable.artwork_stadium,
+        customThemeSelected = CustomThemeSelection.STADIUM,
         twoPlayersMode = false,
         alwaysOnScreen = false,
         soundFx = true,
@@ -262,7 +193,7 @@ private fun SettingsScreenPreview() {
         selectedTheme = "Default",
         customBackground = false,
         themeColor = "Default",
-        onArtworkChange = {},
+        onCustomThemeChange = {},
         onTwoPlayersModeChange = {},
         onAlwaysOnScreenChange = {},
         onSoundFxChange = {},
@@ -270,6 +201,6 @@ private fun SettingsScreenPreview() {
         onDisplayNotificationBarChange = {},
         onSelectedThemeChange = {},
         onCustomBackgroundChange = {},
-        onThemeColorChange = { _ -> }
+        onColorVariantChange = { _ -> }
     )
 }

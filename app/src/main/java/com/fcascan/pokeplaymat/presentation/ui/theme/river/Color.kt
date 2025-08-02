@@ -1,6 +1,9 @@
 package com.fcascan.pokeplaymat.presentation.ui.theme.river
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import com.fcascan.pokeplaymat.presentation.ui.theme.ColorGrid
 
 val primaryLight = Color(0xFF0A6B59)
 val onPrimaryLight = Color(0xFFFFFFFF)
@@ -218,9 +221,260 @@ val surfaceContainerDarkHighContrast = Color(0xFF1B211F)
 val surfaceContainerHighDarkHighContrast = Color(0xFF252B29)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF303634)
 
+@Preview(showBackground = true, widthDp = 1250)
+@Composable
+private fun RiverColorPaletteLightPreview() {
+    val colorList = listOf(
+        "primaryLight" to primaryLight,
+        "onPrimaryLight" to onPrimaryLight,
+        "primaryContainerLight" to primaryContainerLight,
+        "onPrimaryContainerLight" to onPrimaryContainerLight,
+        "secondaryLight" to secondaryLight,
+        "onSecondaryLight" to onSecondaryLight,
+        "secondaryContainerLight" to secondaryContainerLight,
+        "onSecondaryContainerLight" to onSecondaryContainerLight,
+        "tertiaryLight" to tertiaryLight,
+        "onTertiaryLight" to onTertiaryLight,
+        "tertiaryContainerLight" to tertiaryContainerLight,
+        "onTertiaryContainerLight" to onTertiaryContainerLight,
+        "errorLight" to errorLight,
+        "onErrorLight" to onErrorLight,
+        "errorContainerLight" to errorContainerLight,
+        "onErrorContainerLight" to onErrorContainerLight,
+        "backgroundLight" to backgroundLight,
+        "onBackgroundLight" to onBackgroundLight,
+        "surfaceLight" to surfaceLight,
+        "onSurfaceLight" to onSurfaceLight,
+        "surfaceVariantLight" to surfaceVariantLight,
+        "onSurfaceVariantLight" to onSurfaceVariantLight,
+        "outlineLight" to outlineLight,
+        "outlineVariantLight" to outlineVariantLight,
+        "scrimLight" to scrimLight,
+        "inverseSurfaceLight" to inverseSurfaceLight,
+        "inverseOnSurfaceLight" to inverseOnSurfaceLight,
+        "inversePrimaryLight" to inversePrimaryLight,
+        "surfaceDimLight" to surfaceDimLight,
+        "surfaceBrightLight" to surfaceBrightLight,
+        "surfaceContainerLowestLight" to surfaceContainerLowestLight,
+        "surfaceContainerLowLight" to surfaceContainerLowLight,
+        "surfaceContainerLight" to surfaceContainerLight,
+        "surfaceContainerHighLight" to surfaceContainerHighLight,
+        "surfaceContainerHighestLight" to surfaceContainerHighestLight,
+    )
+    ColorGrid(colors = colorList)
+}
 
+@Preview(showBackground = true, widthDp = 1250)
+@Composable
+private fun RiverColorPaletteLightMediumContrastPreview() {
+    val colorList = listOf(
+        "primaryLightMediumContrast" to primaryLightMediumContrast,
+        "onPrimaryLightMediumContrast" to onPrimaryLightMediumContrast,
+        "primaryContainerLightMediumContrast" to primaryContainerLightMediumContrast,
+        "onPrimaryContainerLightMediumContrast" to onPrimaryContainerLightMediumContrast,
+        "secondaryLightMediumContrast" to secondaryLightMediumContrast,
+        "onSecondaryLightMediumContrast" to onSecondaryLightMediumContrast,
+        "secondaryContainerLightMediumContrast" to secondaryContainerLightMediumContrast,
+        "onSecondaryContainerLightMediumContrast" to onSecondaryContainerLightMediumContrast,
+        "tertiaryLightMediumContrast" to tertiaryLightMediumContrast,
+        "onTertiaryLightMediumContrast" to onTertiaryLightMediumContrast,
+        "tertiaryContainerLightMediumContrast" to tertiaryContainerLightMediumContrast,
+        "onTertiaryContainerLightMediumContrast" to onTertiaryContainerLightMediumContrast,
+        "errorLightMediumContrast" to errorLightMediumContrast,
+        "onErrorLightMediumContrast" to onErrorLightMediumContrast,
+        "errorContainerLightMediumContrast" to errorContainerLightMediumContrast,
+        "onErrorContainerLightMediumContrast" to onErrorContainerLightMediumContrast,
+        "backgroundLightMediumContrast" to backgroundLightMediumContrast,
+        "onBackgroundLightMediumContrast" to onBackgroundLightMediumContrast,
+        "surfaceLightMediumContrast" to surfaceLightMediumContrast,
+        "onSurfaceLightMediumContrast" to onSurfaceLightMediumContrast,
+        "surfaceVariantLightMediumContrast" to surfaceVariantLightMediumContrast,
+        "onSurfaceVariantLightMediumContrast" to onSurfaceVariantLightMediumContrast,
+        "outlineLightMediumContrast" to outlineLightMediumContrast,
+        "outlineVariantLightMediumContrast" to outlineVariantLightMediumContrast,
+        "scrimLightMediumContrast" to scrimLightMediumContrast,
+        "inverseSurfaceLightMediumContrast" to inverseSurfaceLightMediumContrast,
+        "inverseOnSurfaceLightMediumContrast" to inverseOnSurfaceLightMediumContrast,
+        "inversePrimaryLightMediumContrast" to inversePrimaryLightMediumContrast,
+        "surfaceDimLightMediumContrast" to surfaceDimLightMediumContrast,
+        "surfaceBrightLightMediumContrast" to surfaceBrightLightMediumContrast,
+        "surfaceContainerLowestLightMediumContrast" to surfaceContainerLowestLightMediumContrast,
+        "surfaceContainerLowLightMediumContrast" to surfaceContainerLowLightMediumContrast,
+        "surfaceContainerLightMediumContrast" to surfaceContainerLightMediumContrast,
+        "surfaceContainerHighLightMediumContrast" to surfaceContainerHighLightMediumContrast,
+        "surfaceContainerHighestLightMediumContrast" to surfaceContainerHighestLightMediumContrast,
+    )
+    ColorGrid(colors = colorList)
+}
 
+@Preview(showBackground = true, widthDp = 1250)
+@Composable
+private fun RiverColorPaletteLightHighContrastPreview() {
+    val colorList = listOf(
+        "primaryLightHighContrast" to primaryLightHighContrast,
+        "onPrimaryLightHighContrast" to onPrimaryLightHighContrast,
+        "primaryContainerLightHighContrast" to primaryContainerLightHighContrast,
+        "onPrimaryContainerLightHighContrast" to onPrimaryContainerLightHighContrast,
+        "secondaryLightHighContrast" to secondaryLightHighContrast,
+        "onSecondaryLightHighContrast" to onSecondaryLightHighContrast,
+        "secondaryContainerLightHighContrast" to secondaryContainerLightHighContrast,
+        "onSecondaryContainerLightHighContrast" to onSecondaryContainerLightHighContrast,
+        "tertiaryLightHighContrast" to tertiaryLightHighContrast,
+        "onTertiaryLightHighContrast" to onTertiaryLightHighContrast,
+        "tertiaryContainerLightHighContrast" to tertiaryContainerLightHighContrast,
+        "onTertiaryContainerLightHighContrast" to onTertiaryContainerLightHighContrast,
+        "errorLightHighContrast" to errorLightHighContrast,
+        "onErrorLightHighContrast" to onErrorLightHighContrast,
+        "errorContainerLightHighContrast" to errorContainerLightHighContrast,
+        "onErrorContainerLightHighContrast" to onErrorContainerLightHighContrast,
+        "backgroundLightHighContrast" to backgroundLightHighContrast,
+        "onBackgroundLightHighContrast" to onBackgroundLightHighContrast,
+        "surfaceLightHighContrast" to surfaceLightHighContrast,
+        "onSurfaceLightHighContrast" to onSurfaceLightHighContrast,
+        "surfaceVariantLightHighContrast" to surfaceVariantLightHighContrast,
+        "onSurfaceVariantLightHighContrast" to onSurfaceVariantLightHighContrast,
+        "outlineLightHighContrast" to outlineLightHighContrast,
+        "outlineVariantLightHighContrast" to outlineVariantLightHighContrast,
+        "scrimLightHighContrast" to scrimLightHighContrast,
+        "inverseSurfaceLightHighContrast" to inverseSurfaceLightHighContrast,
+        "inverseOnSurfaceLightHighContrast" to inverseOnSurfaceLightHighContrast,
+        "inversePrimaryLightHighContrast" to inversePrimaryLightHighContrast,
+        "surfaceDimLightHighContrast" to surfaceDimLightHighContrast,
+        "surfaceBrightLightHighContrast" to surfaceBrightLightHighContrast,
+        "surfaceContainerLowestLightHighContrast" to surfaceContainerLowestLightHighContrast,
+        "surfaceContainerLowLightHighContrast" to surfaceContainerLowLightHighContrast,
+        "surfaceContainerLightHighContrast" to surfaceContainerLightHighContrast,
+        "surfaceContainerHighLightHighContrast" to surfaceContainerHighLightHighContrast,
+        "surfaceContainerHighestLightHighContrast" to surfaceContainerHighestLightHighContrast,
+    )
+    ColorGrid(colors = colorList)
+}
 
+@Preview(showBackground = true, widthDp = 1250)
+@Composable
+private fun RiverColorPaletteDarkPreview() {
+    val colorList = listOf(
+        "primaryDark" to primaryDark,
+        "onPrimaryDark" to onPrimaryDark,
+        "primaryContainerDark" to primaryContainerDark,
+        "onPrimaryContainerDark" to onPrimaryContainerDark,
+        "secondaryDark" to secondaryDark,
+        "onSecondaryDark" to onSecondaryDark,
+        "secondaryContainerDark" to secondaryContainerDark,
+        "onSecondaryContainerDark" to onSecondaryContainerDark,
+        "tertiaryDark" to tertiaryDark,
+        "onTertiaryDark" to onTertiaryDark,
+        "tertiaryContainerDark" to tertiaryContainerDark,
+        "onTertiaryContainerDark" to onTertiaryContainerDark,
+        "errorDark" to errorDark,
+        "onErrorDark" to onErrorDark,
+        "errorContainerDark" to errorContainerDark,
+        "onErrorContainerDark" to onErrorContainerDark,
+        "backgroundDark" to backgroundDark,
+        "onBackgroundDark" to onBackgroundDark,
+        "surfaceDark" to surfaceDark,
+        "onSurfaceDark" to onSurfaceDark,
+        "surfaceVariantDark" to surfaceVariantDark,
+        "onSurfaceVariantDark" to onSurfaceVariantDark,
+        "outlineDark" to outlineDark,
+        "outlineVariantDark" to outlineVariantDark,
+        "scrimDark" to scrimDark,
+        "inverseSurfaceDark" to inverseSurfaceDark,
+        "inverseOnSurfaceDark" to inverseOnSurfaceDark,
+        "inversePrimaryDark" to inversePrimaryDark,
+        "surfaceDimDark" to surfaceDimDark,
+        "surfaceBrightDark" to surfaceBrightDark,
+        "surfaceContainerLowestDark" to surfaceContainerLowestDark,
+        "surfaceContainerLowDark" to surfaceContainerLowDark,
+        "surfaceContainerDark" to surfaceContainerDark,
+        "surfaceContainerHighDark" to surfaceContainerHighDark,
+        "surfaceContainerHighestDark" to surfaceContainerHighestDark,
+    )
+    ColorGrid(colors = colorList)
+}
 
+@Preview(showBackground = true, widthDp = 1250)
+@Composable
+private fun RiverColorPaletteDarkMediumContrastPreview() {
+    val colorList = listOf(
+        "primaryDarkMediumContrast" to primaryDarkMediumContrast,
+        "onPrimaryDarkMediumContrast" to onPrimaryDarkMediumContrast,
+        "primaryContainerDarkMediumContrast" to primaryContainerDarkMediumContrast,
+        "onPrimaryContainerDarkMediumContrast" to onPrimaryContainerDarkMediumContrast,
+        "secondaryDarkMediumContrast" to secondaryDarkMediumContrast,
+        "onSecondaryDarkMediumContrast" to onSecondaryDarkMediumContrast,
+        "secondaryContainerDarkMediumContrast" to secondaryContainerDarkMediumContrast,
+        "onSecondaryContainerDarkMediumContrast" to onSecondaryContainerDarkMediumContrast,
+        "tertiaryDarkMediumContrast" to tertiaryDarkMediumContrast,
+        "onTertiaryDarkMediumContrast" to onTertiaryDarkMediumContrast,
+        "tertiaryContainerDarkMediumContrast" to tertiaryContainerDarkMediumContrast,
+        "onTertiaryContainerDarkMediumContrast" to onTertiaryContainerDarkMediumContrast,
+        "errorDarkMediumContrast" to errorDarkMediumContrast,
+        "onErrorDarkMediumContrast" to onErrorDarkMediumContrast,
+        "errorContainerDarkMediumContrast" to errorContainerDarkMediumContrast,
+        "onErrorContainerDarkMediumContrast" to onErrorContainerDarkMediumContrast,
+        "backgroundDarkMediumContrast" to backgroundDarkMediumContrast,
+        "onBackgroundDarkMediumContrast" to onBackgroundDarkMediumContrast,
+        "surfaceDarkMediumContrast" to surfaceDarkMediumContrast,
+        "onSurfaceDarkMediumContrast" to onSurfaceDarkMediumContrast,
+        "surfaceVariantDarkMediumContrast" to surfaceVariantDarkMediumContrast,
+        "onSurfaceVariantDarkMediumContrast" to onSurfaceVariantDarkMediumContrast,
+        "outlineDarkMediumContrast" to outlineDarkMediumContrast,
+        "outlineVariantDarkMediumContrast" to outlineVariantDarkMediumContrast,
+        "scrimDarkMediumContrast" to scrimDarkMediumContrast,
+        "inverseSurfaceDarkMediumContrast" to inverseSurfaceDarkMediumContrast,
+        "inverseOnSurfaceDarkMediumContrast" to inverseOnSurfaceDarkMediumContrast,
+        "inversePrimaryDarkMediumContrast" to inversePrimaryDarkMediumContrast,
+        "surfaceDimDarkMediumContrast" to surfaceDimDarkMediumContrast,
+        "surfaceBrightDarkMediumContrast" to surfaceBrightDarkMediumContrast,
+        "surfaceContainerLowestDarkMediumContrast" to surfaceContainerLowestDarkMediumContrast,
+        "surfaceContainerLowDarkMediumContrast" to surfaceContainerLowDarkMediumContrast,
+        "surfaceContainerDarkMediumContrast" to surfaceContainerDarkMediumContrast,
+        "surfaceContainerHighDarkMediumContrast" to surfaceContainerHighDarkMediumContrast,
+        "surfaceContainerHighestDarkMediumContrast" to surfaceContainerHighestDarkMediumContrast,
+    )
+    ColorGrid(colors = colorList)
+}
 
-
+@Preview(showBackground = true, widthDp = 1250)
+@Composable
+private fun RiverColorPaletteDarkHighContrastPreview() {
+    val colorList = listOf(
+        "primaryDarkHighContrast" to primaryDarkHighContrast,
+        "onPrimaryDarkHighContrast" to onPrimaryDarkHighContrast,
+        "primaryContainerDarkHighContrast" to primaryContainerDarkHighContrast,
+        "onPrimaryContainerDarkHighContrast" to onPrimaryContainerDarkHighContrast,
+        "secondaryDarkHighContrast" to secondaryDarkHighContrast,
+        "onSecondaryDarkHighContrast" to onSecondaryDarkHighContrast,
+        "secondaryContainerDarkHighContrast" to secondaryContainerDarkHighContrast,
+        "onSecondaryContainerDarkHighContrast" to onSecondaryContainerDarkHighContrast,
+        "tertiaryDarkHighContrast" to tertiaryDarkHighContrast,
+        "onTertiaryDarkHighContrast" to onTertiaryDarkHighContrast,
+        "tertiaryContainerDarkHighContrast" to tertiaryContainerDarkHighContrast,
+        "onTertiaryContainerDarkHighContrast" to onTertiaryContainerDarkHighContrast,
+        "errorDarkHighContrast" to errorDarkHighContrast,
+        "onErrorDarkHighContrast" to onErrorDarkHighContrast,
+        "errorContainerDarkHighContrast" to errorContainerDarkHighContrast,
+        "onErrorContainerDarkHighContrast" to onErrorContainerDarkHighContrast,
+        "backgroundDarkHighContrast" to backgroundDarkHighContrast,
+        "onBackgroundDarkHighContrast" to onBackgroundDarkHighContrast,
+        "surfaceDarkHighContrast" to surfaceDarkHighContrast,
+        "onSurfaceDarkHighContrast" to onSurfaceDarkHighContrast,
+        "surfaceVariantDarkHighContrast" to surfaceVariantDarkHighContrast,
+        "onSurfaceVariantDarkHighContrast" to onSurfaceVariantDarkHighContrast,
+        "outlineDarkHighContrast" to outlineDarkHighContrast,
+        "outlineVariantDarkHighContrast" to outlineVariantDarkHighContrast,
+        "scrimDarkHighContrast" to scrimDarkHighContrast,
+        "inverseSurfaceDarkHighContrast" to inverseSurfaceDarkHighContrast,
+        "inverseOnSurfaceDarkHighContrast" to inverseOnSurfaceDarkHighContrast,
+        "inversePrimaryDarkHighContrast" to inversePrimaryDarkHighContrast,
+        "surfaceDimDarkHighContrast" to surfaceDimDarkHighContrast,
+        "surfaceBrightDarkHighContrast" to surfaceBrightDarkHighContrast,
+        "surfaceContainerLowestDarkHighContrast" to surfaceContainerLowestDarkHighContrast,
+        "surfaceContainerLowDarkHighContrast" to surfaceContainerLowDarkHighContrast,
+        "surfaceContainerDarkHighContrast" to surfaceContainerDarkHighContrast,
+        "surfaceContainerHighDarkHighContrast" to surfaceContainerHighDarkHighContrast,
+        "surfaceContainerHighestDarkHighContrast" to surfaceContainerHighestDarkHighContrast,
+    )
+    ColorGrid(colors = colorList)
+}

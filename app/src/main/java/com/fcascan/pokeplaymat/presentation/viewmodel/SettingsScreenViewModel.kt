@@ -1,8 +1,8 @@
 package com.fcascan.pokeplaymat.presentation.viewmodel
 
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fcascan.pokeplaymat.model.CustomThemeSelection
 import com.fcascan.pokeplaymat.utils.SharedPreferencesUtil
 import com.fcascan.pokeplaymat.utils.restartableStateIn
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ class SettingsScreenViewModel @Inject constructor(
         emit(SettingsScreenState.Loading)
         runCatching {
             val successState = SettingsScreenState.Success(
-                artwork = sharedPreferences.getArtwork(),
+                customTheme = sharedPreferences.getCustomTheme(),
                 twoPlayersMode = sharedPreferences.getTwoPlayersMode(),
                 alwaysOnScreen = sharedPreferences.getAlwaysOnScreen(),
                 soundFx = sharedPreferences.getSoundFx(),
@@ -36,8 +36,8 @@ class SettingsScreenViewModel @Inject constructor(
         initialValue = SettingsScreenState.Loading,
     )
 
-    fun updateArtwork(@DrawableRes artwork: Int) {
-        sharedPreferences.setArtwork(artwork)
+    fun updateArtwork(customTheme: CustomThemeSelection?) {
+        sharedPreferences.setCustomTheme(customTheme)
         settingsScreenState.restart()
     }
 
@@ -79,7 +79,7 @@ sealed class SettingsScreenState {
     data object Loading : SettingsScreenState()
     data class Error(val error: Throwable) : SettingsScreenState()
     data class Success(
-        val artwork: Int,
+        val customTheme: CustomThemeSelection?,
         val twoPlayersMode: Boolean,
         val alwaysOnScreen: Boolean,
         val soundFx: Boolean,

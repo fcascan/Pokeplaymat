@@ -14,6 +14,9 @@ Made with love by fcascan to the Pokémon community.
 
 ### **ChangeLog** ###
 
+### ***v0.0.6*** ###
+- Dynamic Themes now working.
+
 ### ***v0.0.5*** ###
 - Settings Screen added. Dagger-Hilt added.
 

@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Poképlaymat</string>
+
+    <string name="select_option">Select Option</string>
+    <string name="option_desert">Desert</string>
+    <string name="option_forest">Forest</string>
+    <string name="option_hospital">Hospital</string>
+    <string name="option_league">League</string>
+    <string name="option_river">River</string>
+    <string name="option_safari">Safari</string>
+    <string name="option_sea">Sea</string>
+    <string name="option_snow">Snow</string>
+    <string name="option_stadium">Stadium</string>
+    <string name="option_town">Town</string>
+    <string name="option_world_championship">World Championship</string>
+    <string name="select_custom_theme_primary_label">Select custom theme</string>
+    <string name="select_custom_theme_secondary_label">Select app theme and artwork for the background</string>
+    <string name="select_color_variant_primary_label">Select color variant</string>
+    <string name="select_color_variant_secondary_label">Select the color variant for the selected theme</string>
 </resources>

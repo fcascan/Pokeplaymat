@@ -1,4 +1,3 @@
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fcascan.pokeplaymat.R
+import com.fcascan.pokeplaymat.model.CustomThemeSelection
 import com.fcascan.pokeplaymat.presentation.common.components.BackGround
 import com.fcascan.pokeplaymat.presentation.common.components.InteractiveCard
 import com.fcascan.pokeplaymat.presentation.common.components.LogoButton
@@ -34,6 +34,7 @@ import com.fcascan.pokeplaymat.presentation.ui.dimen.Padding
 import com.fcascan.pokeplaymat.presentation.ui.dimen.Size
 import com.fcascan.pokeplaymat.presentation.ui.dimen.Spacing
 import com.fcascan.pokeplaymat.presentation.ui.theme.stadium.StadiumTheme
+import com.fcascan.pokeplaymat.presentation.util.CustomThemeSelectionMapper
 import com.fcascan.pokeplaymat.presentation.viewmodel.MainScreenState
 import com.fcascan.pokeplaymat.presentation.viewmodel.MainScreenViewModel
 
@@ -56,7 +57,7 @@ fun MainScreen(
         }
         is MainScreenState.Success -> {
             MainScreenContent(
-                artwork = (mainScreenState as MainScreenState.Success).artwork,
+                customThemeSelected = (mainScreenState as MainScreenState.Success).customTheme,
                 playerName = (mainScreenState as MainScreenState.Success).playerName,
                 numberOfBenchedCards = (mainScreenState as MainScreenState.Success).numberOfBenchedCards,
                 navigateToSettings = navigateToSettings,
@@ -68,17 +69,19 @@ fun MainScreen(
 
 @Composable
 fun MainScreenContent(
-    @DrawableRes artwork: Int,
+    customThemeSelected: CustomThemeSelection?,
     playerName: String?,
     numberOfBenchedCards: Int,
     navigateToSettings: () -> Unit,
     navigateToGuide: () -> Unit
 ) {
+    val customThemeSelectionMapper = CustomThemeSelectionMapper
+
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         BackGround(
-            artwork,
+            customThemeSelectionMapper.mapToDrawableResId(customThemeSelected),
         )
         Box(modifier = Modifier
             .fillMaxSize()
@@ -224,7 +227,7 @@ fun MainScreenContent(
 private fun MainScreenLandscapePreview() {
     StadiumTheme {
         MainScreenContent(
-            artwork = R.drawable.artwork_river,
+            customThemeSelected = CustomThemeSelection.RIVER,
             playerName = "Player",
             numberOfBenchedCards = 5,
             navigateToSettings = {},
@@ -243,7 +246,7 @@ private fun MainScreenLandscapePreview() {
 private fun MainScreenNormalPreview() {
     StadiumTheme {
         MainScreenContent(
-            artwork = R.drawable.artwork_river,
+            customThemeSelected = CustomThemeSelection.RIVER,
             playerName = "Player",
             numberOfBenchedCards = 5,
             navigateToSettings = {},
